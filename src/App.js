@@ -1,23 +1,45 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
 
+function Greeting({ user, message}){
+  return (
+    <div>
+      <h2>Hello, {user || 'Guest'}</h2>
+      <p>Message of the day : {message || 'Bye'}</p>
+    </div>
+  );
+}
+
 function App() {
+  
+  const [isVisible, setIsVisible] = useState(true);
+  const user = 'kalyani';
+  const message = 'welcome to react programming';
+
+  const [num, setNum] = useState(0);
+
+  const handleChangeNum = (e) => {
+    setNum(Number(e.target.value));
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+      <h2>Conditional Rendering With &&</h2>
+      <button onClick={() => {setIsVisible(!isVisible)}}>Toggle Visibility</button>
+      <p>{isVisible && <p>This paragraph is rendered when isVisisble is true.</p>}</p>
+      <div>
+        <Greeting user={user} message={message}/>
+      </div>
+      <div>
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          <input type="text" value={num} onChange={handleChangeNum} placeholder="Enter value for num"/>
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <p>
+          {num % 2 === 0 && num !== 0 && <p>The {num} is even</p>}
+          {num % 2 !== 0 && num !== 0 && <p>The {num} is odd</p>}
+          {num === 0 && <p>Enter a valid number</p>}
+        </p>
+      </div>
     </div>
   );
 }
